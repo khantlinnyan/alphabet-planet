@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* One accent color only */
+  --accent: 139 92 246; /* violet */
+  --ink: 244 244 246;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html,
+body {
+  height: 100%;
+  background: #03040a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+::selection {
+  background: rgba(139, 92, 246, 0.28);
+}
+
+/* Motion safety */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom utilities (replaces tailwind.config extensions) */
+@layer utilities {
+  .text-ink {
+    color: rgb(var(--ink));
+  }
+
+  .bg-accent {
+    background-color: rgb(var(--accent));
+  }
+  .bg-accent\/90 {
+    background-color: rgb(var(--accent) / 0.9);
+  }
+
+  .border-accent\/40 {
+    border-color: rgb(var(--accent) / 0.4);
+  }
+
+  .shadow-glow {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 10px 40px rgba(0, 0, 0, 0.55);
+  }
+
+  .animate-drift {
+    animation: drift 24s linear infinite;
+  }
+  .animate-twinkle {
+    animation: twinkle 3.2s ease-in-out infinite;
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-2.5%, -3%, 0);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.9;
+  }
 }
