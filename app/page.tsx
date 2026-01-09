@@ -3,9 +3,10 @@ import SpaceBackground from "@/components/animation/space-background";
 import About from "@/components/sections/about";
 import Footer from "@/components/sections/Footer";
 import Hero from "@/components/sections/hero";
-import Inside from "@/components/sections/inside";
-import LearningMaterials from "@/components/sections/learning-material/learning-material";
-import TheBook from "@/components/sections/thebook";
+import LeadMagnet from "@/components/sections/lead-magnet";
+import ProblemSolution from "@/components/sections/problem-solution";
+import ProductKit from "@/components/sections/product-kit";
+import SplitFunnel from "@/components/sections/split-funnel";
 // import HeroSection from "@/components/sections/hero-section";
 
 const page = () => {
@@ -15,14 +16,11 @@ const page = () => {
 
       <div className="relative">
         <Hero />
-        <TheBook />
-        <LearningMaterials />
-        <Inside />
-
-        {/* <Reviews /> */}
+        <ProblemSolution />
+        <SplitFunnel />
+        <ProductKit />
+        <LeadMagnet />
         <About />
-        {/* <BuyOptions />
-        <Footer /> */}
         <Footer />
       </div>
     </main>

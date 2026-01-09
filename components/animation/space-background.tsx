@@ -24,7 +24,7 @@ type Star = {
 export default function SpaceBackground() {
   const stars = useMemo(() => {
     const rand = mulberry32(42);
-    const count = 90; // sparse
+    const count = 130; // still calm, but more present
     const out: Star[] = [];
     for (let i = 0; i < count; i++) {
       const size = rand() < 0.82 ? 1 : rand() < 0.95 ? 1.5 : 2;
@@ -46,39 +46,72 @@ export default function SpaceBackground() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0">
       {/* Base space */}
-      <div className="absolute inset-0 bg-[#03040a]" />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(1200px 820px at 12% 6%, rgba(143,0,255,0.45), transparent 60%), radial-gradient(900px 640px at 86% 14%, rgba(56,189,248,0.3), transparent 60%), radial-gradient(980px 720px at 52% 92%, rgba(34,197,94,0.26), transparent 62%), radial-gradient(760px 520px at 30% 78%, rgba(248,113,113,0.18), transparent 58%), #0b0d17",
+        }}
+      />
 
       {/* Nebula gradients (soft + calm) */}
-      <div className="absolute inset-0 opacity-70">
+      <div className="absolute inset-0 opacity-100">
         <div
-          className="absolute -top-40 left-[-20%] h-[520px] w-[520px] rounded-full blur-3xl"
+          className="absolute -top-44 left-[-20%] h-[540px] w-[540px] rounded-full blur-[110px]"
           style={{
             background:
-              "radial-gradient(circle at 30% 30%, rgba(139,92,246,0.22), transparent 62%)",
+              "radial-gradient(circle at 30% 30%, rgba(143,0,255,0.65), transparent 58%)",
           }}
         />
         <div
-          className="absolute top-[20%] right-[-18%] h-[620px] w-[620px] rounded-full blur-3xl"
+          className="absolute top-[16%] right-[-18%] h-[660px] w-[660px] rounded-full blur-[125px]"
           style={{
             background:
-              "radial-gradient(circle at 60% 40%, rgba(99,102,241,0.16), transparent 60%)",
+              "radial-gradient(circle at 60% 40%, rgba(59,130,246,0.5), transparent 56%)",
           }}
         />
         <div
-          className="absolute bottom-[-28%] left-[18%] h-[680px] w-[680px] rounded-full blur-3xl"
+          className="absolute bottom-[-30%] left-[12%] h-[720px] w-[720px] rounded-full blur-[135px]"
           style={{
             background:
-              "radial-gradient(circle at 40% 60%, rgba(16,185,129,0.08), transparent 62%)",
+              "radial-gradient(circle at 40% 60%, rgba(34,197,94,0.42), transparent 58%)",
+          }}
+        />
+        <div
+          className="absolute bottom-[8%] right-[6%] h-[520px] w-[520px] rounded-full blur-[120px]"
+          style={{
+            background:
+              "radial-gradient(circle at 60% 40%, rgba(249,115,22,0.28), transparent 58%)",
           }}
         />
       </div>
+
+      {/* Star dust texture */}
+      <div
+        className="absolute inset-0 opacity-45"
+        style={{
+          backgroundImage:
+            "radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px), radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px)",
+          backgroundSize: "140px 140px, 220px 220px",
+          backgroundPosition: "0 0, 60px 80px",
+        }}
+      />
 
       {/* Subtle vignette */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(1200px 800px at 50% 30%, transparent 35%, rgba(0,0,0,0.75) 100%)",
+            "radial-gradient(1200px 800px at 50% 30%, transparent 26%, rgba(0,0,0,0.82) 100%)",
+        }}
+      />
+
+      {/* Soft horizon glow */}
+      <div
+        className="absolute inset-0 opacity-70"
+        style={{
+          background:
+            "radial-gradient(900px 240px at 50% 0%, rgba(255,255,255,0.14), transparent 62%)",
         }}
       />
 
