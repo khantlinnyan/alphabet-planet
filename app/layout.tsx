@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { M_PLUS_Rounded_1c, Nunito } from "next/font/google";
+import { Outfit, Quicksand } from "next/font/google";
 import "./globals.css";
+import ReactLenis from "lenis/react";
 
-const nunito = Nunito({
+const outfit = Outfit({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
-const rounded = M_PLUS_Rounded_1c({
+const quicksand = Quicksand({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["500", "700", "800"],
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -26,7 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${nunito.variable} ${rounded.variable} antialiased`}>
+      <body className={`${outfit.variable} ${quicksand.variable} antialiased`}>
+        <ReactLenis root />
+
         {children}
       </body>
     </html>

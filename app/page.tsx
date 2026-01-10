@@ -2,6 +2,7 @@
 import SpaceBackground from "@/components/animation/space-background";
 import About from "@/components/sections/about";
 import Footer from "@/components/sections/Footer";
+import FeatureCards from "@/components/sections/feature-cards";
 import Hero from "@/components/sections/hero";
 import LeadMagnet from "@/components/sections/lead-magnet";
 import ProblemSolution from "@/components/sections/problem-solution";
@@ -16,6 +17,7 @@ const page = () => {
 
       <div className="relative">
         <Hero />
+        <FeatureCards />
         <ProblemSolution />
         <SplitFunnel />
         <ProductKit />

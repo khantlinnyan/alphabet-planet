@@ -11,98 +11,116 @@ function mulberry32(seed: number) {
   };
 }
 
-type Star = {
-  left: string;
-  top: string;
-  size: number;
-  opacity: number;
-  twinkle: boolean;
-  delay: number;
-  duration: number;
+type StarLayer = {
+  boxShadow: string;
+};
+
+type StarShadowOptions = {
+  minOpacity?: number;
+  maxOpacity?: number;
+  spreadChance?: number;
+  blurChance?: number;
+};
+
+const buildStarShadows = (
+  count: number,
+  seed: number,
+  {
+    minOpacity = 0.35,
+    maxOpacity = 0.9,
+    spreadChance = 0.25,
+    blurChance = 0.2,
+  }: StarShadowOptions = {}
+): StarLayer => {
+  const rand = mulberry32(seed);
+  const shadows: string[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const x = (rand() * 100).toFixed(2);
+    const y = (rand() * 100).toFixed(2);
+    const opacity = (minOpacity + rand() * (maxOpacity - minOpacity)).toFixed(
+      2
+    );
+    const blur = rand() < blurChance ? (rand() < 0.6 ? 1 : 2) : 0;
+    const spread = rand() < spreadChance ? 1 : 0;
+    shadows.push(
+      `${x}vw ${y}vh ${blur}px ${spread}px rgba(255,255,255,${opacity})`
+    );
+  }
+
+  return { boxShadow: shadows.join(", ") };
 };
 
 export default function SpaceBackground() {
-  const stars = useMemo(() => {
-    const rand = mulberry32(42);
-    const count = 130; // still calm, but more present
-    const out: Star[] = [];
-    for (let i = 0; i < count; i++) {
-      const size = rand() < 0.82 ? 1 : rand() < 0.95 ? 1.5 : 2;
-      const opacity = 0.18 + rand() * 0.55;
-      const twinkle = rand() < 0.12; // only a few twinkle
-      out.push({
-        left: `${rand() * 100}%`,
-        top: `${rand() * 100}%`,
-        size,
-        opacity,
-        twinkle,
-        delay: rand() * 4,
-        duration: 2.6 + rand() * 3.5,
-      });
-    }
-    return out;
-  }, []);
+  const starsFar = useMemo(
+    () =>
+      buildStarShadows(180, 42, {
+        minOpacity: 0.28,
+        maxOpacity: 0.65,
+        spreadChance: 0.2,
+        blurChance: 0.15,
+      }),
+    []
+  );
+
+  const starsNear = useMemo(
+    () =>
+      buildStarShadows(90, 84, {
+        minOpacity: 0.45,
+        maxOpacity: 0.95,
+        spreadChance: 0.35,
+        blurChance: 0.4,
+      }),
+    []
+  );
 
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0">
-      {/* Base space */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(1200px 820px at 12% 6%, rgba(143,0,255,0.45), transparent 60%), radial-gradient(900px 640px at 86% 14%, rgba(56,189,248,0.3), transparent 60%), radial-gradient(980px 720px at 52% 92%, rgba(34,197,94,0.26), transparent 62%), radial-gradient(760px 520px at 30% 78%, rgba(248,113,113,0.18), transparent 58%), #0b0d17",
+            "radial-gradient(960px 720px at 50% 28%, rgba(129,140,248,0.22), transparent 62%), radial-gradient(820px 640px at 18% 8%, rgba(139,92,246,0.18), transparent 60%), radial-gradient(680px 520px at 82% 12%, rgba(34,211,238,0.14), transparent 60%), #0b0d17",
         }}
       />
 
-      {/* Nebula gradients (soft + calm) */}
-      <div className="absolute inset-0 opacity-100">
+      <div className="absolute inset-0 opacity-90">
         <div
-          className="absolute -top-44 left-[-20%] h-[540px] w-[540px] rounded-full blur-[110px]"
+          className="absolute -top-44 left-[-20%] h-[520px] w-[520px] rounded-full blur-[120px]"
           style={{
             background:
-              "radial-gradient(circle at 30% 30%, rgba(143,0,255,0.65), transparent 58%)",
+              "radial-gradient(circle at 30% 30%, rgba(99,102,241,0.38), transparent 58%)",
           }}
         />
         <div
-          className="absolute top-[16%] right-[-18%] h-[660px] w-[660px] rounded-full blur-[125px]"
+          className="absolute top-[10%] right-[-16%] h-[640px] w-[640px] rounded-full blur-[130px]"
           style={{
             background:
-              "radial-gradient(circle at 60% 40%, rgba(59,130,246,0.5), transparent 56%)",
+              "radial-gradient(circle at 60% 40%, rgba(56,189,248,0.36), transparent 56%)",
           }}
         />
         <div
-          className="absolute bottom-[-30%] left-[12%] h-[720px] w-[720px] rounded-full blur-[135px]"
+          className="absolute bottom-[-28%] left-[12%] h-[700px] w-[700px] rounded-full blur-[135px]"
           style={{
             background:
-              "radial-gradient(circle at 40% 60%, rgba(34,197,94,0.42), transparent 58%)",
+              "radial-gradient(circle at 40% 60%, rgba(59,130,246,0.2), transparent 58%)",
           }}
         />
         <div
-          className="absolute bottom-[8%] right-[6%] h-[520px] w-[520px] rounded-full blur-[120px]"
+          className="absolute bottom-[4%] right-[6%] h-[520px] w-[520px] rounded-full blur-[120px]"
           style={{
             background:
-              "radial-gradient(circle at 60% 40%, rgba(249,115,22,0.28), transparent 58%)",
+              "radial-gradient(circle at 60% 40%, rgba(16,185,129,0.18), transparent 58%)",
           }}
         />
       </div>
-
-      {/* Star dust texture */}
-      <div
-        className="absolute inset-0 opacity-45"
-        style={{
-          backgroundImage:
-            "radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px), radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px)",
-          backgroundSize: "140px 140px, 220px 220px",
-          backgroundPosition: "0 0, 60px 80px",
-        }}
-      />
 
       {/* Subtle vignette */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(1200px 800px at 50% 30%, transparent 26%, rgba(0,0,0,0.82) 100%)",
+            "radial-gradient(1200px 800px at 50% 25%, transparent 28%, rgba(0,0,0,0.82) 100%)",
         }}
       />
 
@@ -115,30 +133,24 @@ export default function SpaceBackground() {
         }}
       />
 
-      {/* Stars drift layer */}
-      <div className="absolute inset-0 animate-drift">
-        {stars.map((s, idx) => (
-          <span
-            key={idx}
-            className={[
-              "absolute rounded-full bg-white/90",
-              s.twinkle ? "animate-twinkle" : "",
-            ].join(" ")}
-            style={{
-              left: s.left,
-              top: s.top,
-              width: `${s.size}px`,
-              height: `${s.size}px`,
-              opacity: s.opacity,
-              animationDelay: `${s.delay}s`,
-              animationDuration: `${s.duration}s`,
-              filter:
-                s.size >= 2
-                  ? "drop-shadow(0 0 8px rgba(255,255,255,0.22))"
-                  : "none",
-            }}
-          />
-        ))}
+      {/* Starfield layers */}
+      <div className="absolute inset-0 motion-safe:animate-star-drift-slow">
+        <span
+          className="absolute left-0 top-0 h-px w-px rounded-full bg-white/70 motion-safe:animate-star-twinkle"
+          style={{
+            boxShadow: starsFar.boxShadow,
+            animationDuration: "7s",
+          }}
+        />
+      </div>
+      <div className="absolute inset-0 motion-safe:animate-star-drift-fast">
+        <span
+          className="absolute left-0 top-0 h-[2px] w-[2px] rounded-full bg-white/80 motion-safe:animate-star-twinkle"
+          style={{
+            boxShadow: starsNear.boxShadow,
+            animationDuration: "4.8s",
+          }}
+        />
       </div>
     </div>
   );
