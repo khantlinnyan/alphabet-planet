@@ -1,5 +1,5 @@
 // import Galaxy from "@/components/Galaxy";
-import SpaceBackground from "@/components/animation/space-background";
+import SpaceBackground from "@/components/sections/space-background";
 import About from "@/components/sections/about";
 import Footer from "@/components/sections/Footer";
 import FeatureCards from "@/components/sections/feature-cards";

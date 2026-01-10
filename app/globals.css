@@ -62,6 +62,21 @@ body {
   .animate-twinkle {
     animation: twinkle 3.2s ease-in-out infinite;
   }
+  .animate-twinkle-strong {
+    animation: twinkle-strong 2.4s ease-in-out infinite;
+  }
+  .animate-drift-slow {
+    animation: drift-slow 36s linear infinite;
+  }
+  .animate-drift-fast {
+    animation: drift-fast 20s linear infinite;
+  }
+  .animate-spotlight-sweep {
+    animation: spotlight-sweep 18s ease-in-out infinite;
+  }
+  .animate-spotlight-sweep-reverse {
+    animation: spotlight-sweep-reverse 22s ease-in-out infinite;
+  }
   .animate-star-drift-slow {
     animation: star-drift 90s linear infinite;
   }
@@ -138,6 +153,16 @@ body {
   }
 }
 
+@keyframes twinkle-strong {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 @keyframes twinkle-soft {
   0%,
   100% {
@@ -148,6 +173,47 @@ body {
   }
 }
 
+@keyframes drift-slow {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-4%, -5%, 0);
+  }
+}
+
+@keyframes drift-fast {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-6%, -7%, 0);
+  }
+}
+
+@keyframes spotlight-sweep {
+  0% {
+    transform: translate3d(-6%, -4%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4%, 6%, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-6%, -4%, 0) scale(1);
+  }
+}
+
+@keyframes spotlight-sweep-reverse {
+  0% {
+    transform: translate3d(6%, 4%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-4%, -6%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(6%, 4%, 0) scale(1);
+  }
+}
 @keyframes float {
   0%,
   100% {

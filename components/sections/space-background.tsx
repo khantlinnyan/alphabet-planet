@@ -19,29 +19,80 @@ type Star = {
   twinkle: boolean;
   delay: number;
   duration: number;
+  glow: boolean;
 };
 
 export default function SpaceBackground() {
-  const stars = useMemo(() => {
-    const rand = mulberry32(42);
-    const count = 90; // sparse
+  const buildStars = (
+    seed: number,
+    {
+      count,
+      sizeOptions,
+      minOpacity,
+      maxOpacity,
+      twinkleChance,
+      glowChance,
+      minDuration,
+      maxDuration,
+    }: {
+      count: number;
+      sizeOptions: number[];
+      minOpacity: number;
+      maxOpacity: number;
+      twinkleChance: number;
+      glowChance: number;
+      minDuration: number;
+      maxDuration: number;
+    }
+  ) => {
+    const rand = mulberry32(seed);
     const out: Star[] = [];
     for (let i = 0; i < count; i++) {
-      const size = rand() < 0.82 ? 1 : rand() < 0.95 ? 1.5 : 2;
-      const opacity = 0.18 + rand() * 0.55;
-      const twinkle = rand() < 0.12; // only a few twinkle
+      const size =
+        sizeOptions[Math.floor(rand() * sizeOptions.length)] ?? sizeOptions[0];
       out.push({
         left: `${rand() * 100}%`,
         top: `${rand() * 100}%`,
         size,
-        opacity,
-        twinkle,
+        opacity: minOpacity + rand() * (maxOpacity - minOpacity),
+        twinkle: rand() < twinkleChance,
         delay: rand() * 4,
-        duration: 2.6 + rand() * 3.5,
+        duration: minDuration + rand() * (maxDuration - minDuration),
+        glow: rand() < glowChance,
       });
     }
     return out;
-  }, []);
+  };
+
+  const starsFar = useMemo(
+    () =>
+      buildStars(42, {
+        count: 140,
+        sizeOptions: [1, 1.5, 2],
+        minOpacity: 0.18,
+        maxOpacity: 0.7,
+        twinkleChance: 0.25,
+        glowChance: 0.2,
+        minDuration: 3,
+        maxDuration: 6.2,
+      }),
+    []
+  );
+
+  const starsNear = useMemo(
+    () =>
+      buildStars(84, {
+        count: 70,
+        sizeOptions: [1.5, 2, 2.5, 3],
+        minOpacity: 0.35,
+        maxOpacity: 0.95,
+        twinkleChance: 0.48,
+        glowChance: 0.45,
+        minDuration: 2,
+        maxDuration: 4.5,
+      }),
+    []
+  );
 
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0">
@@ -73,6 +124,24 @@ export default function SpaceBackground() {
         />
       </div>
 
+      {/* Moving sport lights */}
+      <div className="absolute inset-0 opacity-70 mix-blend-screen">
+        <div
+          className="absolute -top-32 left-[35%] h-[480px] w-[520px] rounded-full blur-[80px] motion-safe:animate-spotlight-sweep"
+          style={{
+            background:
+              "radial-gradient(closest-side, rgba(56,189,248,0.35), transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute top-[30%] -left-[10%] h-[520px] w-[520px] rounded-full blur-[90px] motion-safe:animate-spotlight-sweep-reverse"
+          style={{
+            background:
+              "radial-gradient(closest-side, rgba(168,85,247,0.35), transparent 72%)",
+          }}
+        />
+      </div>
+
       {/* Subtle vignette */}
       <div
         className="absolute inset-0"
@@ -82,14 +151,14 @@ export default function SpaceBackground() {
         }}
       />
 
-      {/* Stars drift layer */}
-      <div className="absolute inset-0 animate-drift">
-        {stars.map((s, idx) => (
+      {/* Stars drift layers */}
+      <div className="absolute inset-0 motion-safe:animate-drift-slow">
+        {starsFar.map((s, idx) => (
           <span
             key={idx}
             className={[
               "absolute rounded-full bg-white/90",
-              s.twinkle ? "animate-twinkle" : "",
+              s.twinkle ? "motion-safe:animate-twinkle" : "",
             ].join(" ")}
             style={{
               left: s.left,
@@ -100,9 +169,32 @@ export default function SpaceBackground() {
               animationDelay: `${s.delay}s`,
               animationDuration: `${s.duration}s`,
               filter:
-                s.size >= 2
-                  ? "drop-shadow(0 0 8px rgba(255,255,255,0.22))"
+                s.size >= 2 || s.glow
+                  ? "drop-shadow(0 0 10px rgba(255,255,255,0.25))"
                   : "none",
+            }}
+          />
+        ))}
+      </div>
+      <div className="absolute inset-0 motion-safe:animate-drift-fast">
+        {starsNear.map((s, idx) => (
+          <span
+            key={idx}
+            className={[
+              "absolute rounded-full bg-white/95",
+              s.twinkle ? "motion-safe:animate-twinkle-strong" : "",
+            ].join(" ")}
+            style={{
+              left: s.left,
+              top: s.top,
+              width: `${s.size}px`,
+              height: `${s.size}px`,
+              opacity: s.opacity,
+              animationDelay: `${s.delay}s`,
+              animationDuration: `${s.duration}s`,
+              filter: s.glow
+                ? "drop-shadow(0 0 12px rgba(255,255,255,0.35))"
+                : "none",
             }}
           />
         ))}
