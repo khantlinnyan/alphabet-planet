@@ -1,95 +1,120 @@
+import Image from "next/image";
+import Section from "./section";
 import SectionDivider from "./section-divider";
 
-const features = [
+const steps = [
   {
-    title: "Stories",
-    desc: "Mini alien adventures that anchor each letter sound in memory.",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-        <path
-          d="M5 4h10a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2V4z"
-          stroke="currentColor"
-          strokeWidth="1.6"
-        />
-        <path
-          d="M7 20h12"
-          stroke="currentColor"
-          strokeWidth="1.6"
-        />
-      </svg>
-    ),
+    step: "01",
+    title: "Meet the Letter Friend",
+    description:
+      "Each letter lives inside a short animated story. Children connect with the character before they ever think about the sound.",
+    why: "Emotion builds memory.",
+    image: "/illustrations/readingalient.png",
+    alt: "Friendly alien in a UFO reading a story",
   },
   {
-    title: "Songs",
-    desc: "Catchy chants that lock in sounds with rhythm and repetition.",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-        <path
-          d="M15 4v10.4a2.6 2.6 0 1 1-1.4-2.3V6.2l6-1.4V12a2.6 2.6 0 1 1-1.4-2.3V4.8L15 6z"
-          stroke="currentColor"
-          strokeWidth="1.6"
-        />
-      </svg>
-    ),
+    step: "02",
+    title: "Sing the Sound",
+    description:
+      "A slow, catchy chant introduces the sound clearly, using rhythm and repetition children love.",
+    why: "Repetition without boredom.",
+    image: "/illustrations/singingalient.png",
+    alt: "Alien singing with a glowing music orb",
   },
   {
-    title: "Play",
-    desc: "Movement games that turn practice into joyful, active learning.",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-        <path
-          d="M12 3l2.6 5.7 6.2.6-4.7 4.1 1.4 6.1L12 16.9 6.5 19.5l1.4-6.1L3.2 9.3l6.2-.6L12 3z"
-          stroke="currentColor"
-          strokeWidth="1.6"
-        />
-      </svg>
-    ),
+    step: "03",
+    title: "Learn Through Movement",
+    description:
+      "Simple actions and gestures turn the sound into a full-body experience — no sitting still required.",
+    why: "Movement strengthens recall.",
+    image: "/illustrations/movementhands.png",
+    alt: "Clapping hands with sparkles",
   },
 ];
 
 export default function FeatureCards() {
   return (
-    <section
-      id="features"
-      className="relative bg-[#0f1222] py-20 md:py-28"
-    >
-      <SectionDivider position="top" fill="#0f1222" />
-
-      <div className="relative z-10 mx-auto max-w-6xl px-6">
-        <div className="max-w-3xl">
-          <p className="text-xs tracking-[0.22em] uppercase text-white/60">
-            Three ways they learn
+    <Section id="features" className="">
+      <div className="relative z-10 mx-auto max-w-[1200px] px-6">
+        <div className="max-w-2xl md:max-w-[60%]">
+          <p className="text-xs tracking-[0.22em] uppercase text-white/75">
+            How children learn on Alphabet Planet
           </p>
           <h2 className="mt-3 font-[var(--font-display)] text-3xl md:text-4xl leading-tight text-white">
-            Stories, songs, and play that keep tiny learners engaged.
+            Little learners remember sounds best when learning feels like play —
+            not lessons.
           </h2>
-          <p className="mt-4 text-sm md:text-base text-white/70">
-            Each letter lives in a short story, a sing-along hook, and a
-            movement moment so kids remember sounds without pressure.
+          <p className="mt-4 text-sm md:text-base text-white/80">
+            Each letter is introduced through a gentle story, a simple song, and
+            playful movement — so children aged 2-5 learn naturally, without
+            pressure or drills.
+          </p>
+          <p className="mt-3 text-xs text-white/65">
+            Designed by an early childhood educator with 18+ years of classroom
+            experience.
           </p>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {features.map((feature) => (
-            <div
-              key={feature.title}
-              className="border-beam group rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.03] to-black/40 p-6 transition-transform duration-300 hover:scale-105"
-            >
-              <div className="flex items-center gap-3 text-white/80">
-                <span className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/15 bg-black/30">
-                  {feature.icon}
-                </span>
-                <h3 className="font-[var(--font-display)] text-xl text-white">
-                  {feature.title}
-                </h3>
+        <div className="relative mt-10 md:mt-12">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-6 right-6 top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-purple-400/20 via-pink-400/20 to-cyan-400/20 md:block"
+          />
+
+          <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-3 pr-2 md:grid md:grid-cols-3 md:overflow-visible md:pb-0">
+            {steps.map((step, index) => (
+              <div
+                key={step.step}
+                data-reveal
+                data-reveal-delay={index * 0.14}
+                className="group relative min-w-[260px] snap-center rounded-[24px] border border-white/10 bg-gradient-to-br from-[#11162a] via-[#0f1222] to-[#0b0d17] p-5 shadow-[0_12px_36px_rgba(0,0,0,0.35)] transition-transform duration-300 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none md:min-w-0 md:p-7"
+              >
+                <div className="flex items-center justify-between text-xs uppercase tracking-[0.28em] text-white/60">
+                  <span>Step {step.step}</span>
+                </div>
+
+                <div className="relative mt-5 h-[140px] md:h-[200px]">
+                  <div
+                    aria-hidden
+                    className="absolute left-4 top-6 h-[110px] w-[110px] rounded-full bg-[radial-gradient(circle,rgba(168,85,247,0.18),transparent_68%)] md:h-[150px] md:w-[150px]"
+                  />
+                  <svg
+                    aria-hidden
+                    className="absolute -left-2 top-3 h-24 w-24 text-white/20"
+                    viewBox="0 0 120 120"
+                    fill="none"
+                  >
+                    <path
+                      d="M16 80 C40 24 88 24 104 80"
+                      stroke="currentColor"
+                      strokeWidth="1.2"
+                      strokeDasharray="3 6"
+                    />
+                  </svg>
+                  <div className="relative ml-2 h-full w-full">
+                    <Image
+                      src={step.image}
+                      alt={step.alt}
+                      width={220}
+                      height={220}
+                      loading="lazy"
+                      className="h-full w-auto max-w-[200px] object-contain transition-transform duration-300 group-hover:-translate-y-1 motion-reduce:transition-none motion-reduce:transform-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-5 space-y-3 text-left">
+                  <h3 className="font-[var(--font-display)] text-xl text-white">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-white/80">{step.description}</p>
+                  <p className="text-sm text-white/60">{step.why}</p>
+                </div>
               </div>
-              <p className="mt-4 text-sm text-white/70">{feature.desc}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-
-      <SectionDivider position="bottom" fill="#0b0d17" />
-    </section>
+    </Section>
   );
 }

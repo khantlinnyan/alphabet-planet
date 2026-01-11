@@ -359,6 +359,6 @@ export const siteContent: SiteContent = {
       { label: "Buy", href: "#buy" },
     ],
     copyrightName: "Teacher Terry",
-    builtWith: "Built with Next.js + GSAP + Tailwind.",
+    builtWith: "Built by KLN & AKS",
   },
 };

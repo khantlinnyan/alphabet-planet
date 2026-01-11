@@ -18,6 +18,8 @@ export default function ChapterReveals() {
       ctx = gsap.context(() => {
         const blocks = gsap.utils.toArray<HTMLElement>("[data-reveal]");
         blocks.forEach((el) => {
+          const delayAttr = el.getAttribute("data-reveal-delay");
+          const delay = delayAttr ? Number(delayAttr) : 0;
           gsap.fromTo(
             el,
             { y: 14, opacity: 0, filter: "blur(6px)" },
@@ -27,6 +29,7 @@ export default function ChapterReveals() {
               filter: "blur(0px)",
               duration: 0.9,
               ease: "power3.out",
+              delay: Number.isFinite(delay) ? delay : 0,
               scrollTrigger: {
                 trigger: el,
                 start: "top 78%",

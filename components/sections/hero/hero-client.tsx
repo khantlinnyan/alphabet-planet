@@ -4,39 +4,17 @@ import Image from "next/image";
 import ChapterReveals from "@/components/animation/chapter-reveals";
 import SectionDivider from "@/components/sections/section-divider";
 import useStickyCta from "@/components/sections/hero/use-sticky-cta";
+import HeroNav from "@/components/sections/hero/hero-nav";
 
 export default function HeroClient() {
   const { ctaRef, stickyRef, stickyMounted } = useStickyCta();
 
   return (
-    <header className="relative overflow-visible">
+    <header id="top" className="relative overflow-visible">
       <ChapterReveals />
 
       <div className="relative mx-auto max-w-6xl px-6 pt-16 md:pt-24 pb-24">
-        <nav className="flex items-center justify-between">
-          <div className="text-sm tracking-wide text-white/70">
-            <span className="text-white/90">Alphabet Planet</span>
-            <span className="mx-2 text-white/25">/</span>
-            <span className="text-white/55">Playful Phonics</span>
-          </div>
-
-          <div className="hidden md:flex items-center gap-6 text-sm text-white/60">
-            {[
-              { label: "Why It Works", href: "#why-it-works" },
-              { label: "Stories", href: "#features" },
-              { label: "Parents", href: "#parents" },
-              { label: "Free Sample", href: "#free-sample" },
-            ].map((n) => (
-              <a
-                key={n.href}
-                href={n.href}
-                className="hover:text-white/90 transition"
-              >
-                {n.label}
-              </a>
-            ))}
-          </div>
-        </nav>
+        <HeroNav />
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
           <div className="md:col-span-7">
@@ -221,8 +199,6 @@ export default function HeroClient() {
           </div>
         </div>
       </div>
-
-      <SectionDivider position="bottom" fill="#0f1222" />
 
       {stickyMounted ? (
         <div
