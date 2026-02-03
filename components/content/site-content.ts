@@ -1,5 +1,19 @@
 export type LinkItem = { label: string; href: string };
 
+export type MetaChip = { label: string; value: string };
+
+export type BookBenefit = {
+  icon: string;
+  title: string;
+  desc: string;
+};
+
+export type BookActions = {
+  primary?: LinkItem;
+  secondary?: LinkItem;
+  tertiary?: LinkItem;
+};
+
 export type Book = {
   id: string;
   label: string;
@@ -7,17 +21,39 @@ export type Book = {
   subtitle: string;
   cover: { imageSrc: string; alt: string };
   synopsis: string;
-  themes: string[];
+  metaChips?: MetaChip[];
+  lookInsideHref?: string;
+  benefits?: BookBenefit[];
+  bestFor?: string;
+  actions?: BookActions;
+};
+
+export type LearningMaterialItem = {
+  title: string;
+  desc: string;
   chips: string[];
-  primaryCta: { label: string; href: string };
-  secondaryCta?: { label: string; href: string };
-  buyOptions: {
-    name: string;
-    price: string;
-    desc: string;
-    cta: { label: string; href: string };
-    featured?: boolean;
-  }[];
+  meta: MetaChip[];
+  cta: LinkItem;
+};
+
+export type CombineStep = { title: string; time: string; desc: string };
+
+export type LearningMaterials = {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  primaryCtas?: {
+    primary: LinkItem;
+    secondary: LinkItem;
+    tertiary: LinkItem;
+  };
+  materials: LearningMaterialItem[];
+  combine: {
+    title: string;
+    totalTime: string;
+    steps: CombineStep[];
+    note: string;
+  };
 };
 
 export type SiteContent = {
@@ -48,21 +84,7 @@ export type SiteContent = {
     books: Book[];
   };
 
-  learningMaterials: {
-    eyebrow: string;
-    title: string;
-    intro: string;
-    materials: {
-      title: string;
-      desc: string;
-      chips: string[];
-    }[];
-    combine: {
-      title: string;
-      steps: { title: string; desc: string }[];
-      note: string;
-    };
-  };
+  learningMaterials: LearningMaterials;
 
   reviews: {
     eyebrow: string;
@@ -93,7 +115,7 @@ export type SiteContent = {
   };
 };
 
-export const siteContent: SiteContent = {
+export const siteContent = {
   brand: {
     authorName: "Teacher Terry",
     siteTagline: "Books",
@@ -361,4 +383,4 @@ export const siteContent: SiteContent = {
     copyrightName: "Teacher Terry",
     builtWith: "Built by KLN & AKS",
   },
-};
+} satisfies SiteContent;
